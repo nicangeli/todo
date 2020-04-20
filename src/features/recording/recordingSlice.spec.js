@@ -4,25 +4,41 @@ import thunk from 'redux-thunk'
 import recordingReducer, {
   startRecording,
   startRecordingClicked,
+  stopRecording,
 } from './recordingSlice'
 
 const mockStore = configureMockStore([thunk])
 
 describe('recording reducer', () => {
-  it('should set the isRecording and stateAtStartOfRecording when startRecording is dispatched', () => {
-    const initialState = {
-      isRecording: false,
-      stateAtStartOfRecording: {},
-    }
-    const stateAtStartOfRecording = {
-      todos: [{ id: '1' }],
-    }
-    const action = startRecording({ stateAtStartOfRecording })
-    const nextState = recordingReducer(initialState, action)
+  describe('startRecording', () => {
+    it('should set the isRecording and stateAtStartOfRecording when startRecording is dispatched', () => {
+      const initialState = {
+        isRecording: false,
+        stateAtStartOfRecording: {},
+      }
+      const stateAtStartOfRecording = {
+        todos: [{ id: '1' }],
+      }
+      const action = startRecording({ stateAtStartOfRecording })
+      const nextState = recordingReducer(initialState, action)
 
-    expect(nextState).toEqual({
-      isRecording: true,
-      stateAtStartOfRecording,
+      expect(nextState).toEqual({
+        isRecording: true,
+        stateAtStartOfRecording,
+      })
+    })
+  })
+  describe('stopRecording', () => {
+    it('should set isRecording to false', () => {
+      const initialState = {
+        isRecording: true,
+      }
+      const action = stopRecording()
+      const nextState = recordingReducer(initialState, action)
+
+      expect(nextState).toEqual({
+        isRecording: false,
+      })
     })
   })
 })
