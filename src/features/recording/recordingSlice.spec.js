@@ -2,10 +2,12 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import { addTodo, updateTodo, deleteTodo } from '../todo/todoSlice'
+
 import recordingReducer, {
   startRecording,
   startRecordingClicked,
   stopRecording,
+  playRecording,
 } from './recordingSlice'
 
 const mockStore = configureMockStore([thunk])
@@ -39,6 +41,19 @@ describe('recording reducer', () => {
 
       expect(nextState).toEqual({
         isRecording: false,
+      })
+    })
+  })
+  describe('playRecording', () => {
+    it('should set isPlaying when playRecording is dispatched', () => {
+      const initialState = {
+        isPlaying: false,
+      }
+      const playRecordingAction = playRecording()
+      const nextState = recordingReducer(initialState, playRecordingAction)
+
+      expect(nextState).toEqual({
+        isPlaying: true,
       })
     })
   })

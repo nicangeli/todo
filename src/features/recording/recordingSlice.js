@@ -23,8 +23,11 @@ const recordingSlice = createSlice({
       state.isRecording = true
       state.stateAtStartOfRecording = action.payload.stateAtStartOfRecording
     },
-    stopRecording: (state, action) => {
+    stopRecording: (state) => {
       state.isRecording = false
+    },
+    playRecording: (state) => {
+      state.isPlaying = true
     },
   },
   extraReducers: {
@@ -36,13 +39,13 @@ const recordingSlice = createSlice({
 
 const { actions, reducer } = recordingSlice
 
-const { startRecording, stopRecording } = actions
+const { startRecording, stopRecording, playRecording } = actions
 
 const startRecordingClicked = () => (dispatch, getState) => {
   const stateAtStartOfRecording = getState()
   dispatch(startRecording({ stateAtStartOfRecording }))
 }
 
-export { startRecording, startRecordingClicked, stopRecording }
+export { startRecording, startRecordingClicked, stopRecording, playRecording }
 
 export default reducer
