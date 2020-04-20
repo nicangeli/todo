@@ -1,13 +1,14 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import { addTodo, updateTodo, deleteTodo } from '../todo/todoSlice'
+import { addTodo, updateTodo, deleteTodo, resetTodos } from '../todo/todoSlice'
 
 import recordingReducer, {
   startRecording,
   startRecordingClicked,
   stopRecording,
   playRecording,
+  playRecordingClicked,
 } from './recordingSlice'
 
 const mockStore = configureMockStore([thunk])
@@ -131,6 +132,50 @@ describe('thunks', () => {
 
       expect(dispatchedActions).toEqual([
         startRecording({ stateAtStartOfRecording: initialState }),
+      ])
+    })
+  })
+  describe('playRecordingClicked', () => {
+    it('should dispatch ', () => {
+      jest.useFakeTimers()
+
+      const stateAtStartOfRecording = {
+        todos: [
+          {
+            id: '1',
+            name: 'Name 1',
+            completed: false,
+          },
+        ],
+      }
+
+      const addTodoAction = addTodo({ name: 'Name 2' })
+      const updateTodoAction = updateTodo({ id: '1', completed: true })
+      const deleteTodoAction = deleteTodo({ id: '1' })
+
+      const initialState = {
+        recording: {
+          isRecording: false,
+          isPlaying: false,
+          stateAtStartOfRecording,
+          actions: [addTodoAction, updateTodoAction, deleteTodoAction],
+        },
+        todos: stateAtStartOfRecording.todos,
+      }
+      const store = mockStore(initialState)
+
+      store.dispatch(playRecordingClicked())
+
+      jest.runAllTimers()
+
+      const dispatchedActions = store.getActions()
+
+      expect(dispatchedActions).toEqual([
+        playRecording(),
+        resetTodos({ todos: stateAtStartOfRecording.todos }),
+        addTodoAction,
+        updateTodoAction,
+        deleteTodoAction,
       ])
     })
   })

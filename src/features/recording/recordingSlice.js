@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { addTodo, updateTodo, deleteTodo } from '../todo/todoSlice'
+import { addTodo, updateTodo, deleteTodo, resetTodos } from '../todo/todoSlice'
 
 const initialState = {
   isRecording: false,
@@ -46,6 +46,26 @@ const startRecordingClicked = () => (dispatch, getState) => {
   dispatch(startRecording({ stateAtStartOfRecording }))
 }
 
-export { startRecording, startRecordingClicked, stopRecording, playRecording }
+const playRecordingClicked = () => (dispatch, getState) => {
+  const { recording } = getState()
+  const { actions: actionsToDispatch, stateAtStartOfRecording } = recording
+
+  dispatch(playRecording())
+  dispatch(resetTodos({ todos: stateAtStartOfRecording.todos }))
+
+  actionsToDispatch.forEach((action, i) => {
+    setTimeout(() => {
+      dispatch(action)
+    }, (i + 1) * 1000)
+  })
+}
+
+export {
+  startRecording,
+  startRecordingClicked,
+  stopRecording,
+  playRecording,
+  playRecordingClicked,
+}
 
 export default reducer
