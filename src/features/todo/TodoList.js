@@ -1,12 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { deleteTodo } from './todoSlice'
+import { deleteTodo, updateTodo } from './todoSlice'
 
-const TodoList = ({ todos, deleteTodo }) => (
+const TodoList = ({ todos, deleteTodo, updateTodo }) => (
   <ul>
     {todos.map((todo) => (
       <li key={todo.id}>
+        <input
+          type="checkbox"
+          checked={todo.completed}
+          onChange={() =>
+            updateTodo({ id: todo.id, completed: !todo.completed })
+          }
+        />
         {todo.name}
         <button onClick={() => deleteTodo({ id: todo.id })}>Delete</button>
       </li>
@@ -19,5 +26,6 @@ const mapStateToProps = (state) => ({
 })
 const mapDispatchToProps = {
   deleteTodo,
+  updateTodo,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
