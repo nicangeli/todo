@@ -21,7 +21,10 @@ const todoSlice = createSlice({
     },
     updateTodo: (state, action) => {
       const todo = state.find(({ id }) => id === action.payload.id)
-      todo.completed = action.payload.completed
+
+      if (todo) {
+        todo.completed = action.payload.completed
+      }
     },
   },
 })

@@ -92,4 +92,11 @@ describe('updateTodo', () => {
       },
     ])
   })
+  it('should do nothing if id is not found', () => {
+    const initialState = []
+    const action = updateTodo({ id: '1', completed: true })
+    const nextState = todoSlice(initialState, action)
+
+    expect(nextState).toEqual(initialState)
+  })
 })
