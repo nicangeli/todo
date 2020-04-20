@@ -1,5 +1,7 @@
 import React from 'react'
 
-const App = () => 'Hello World'
+import AddTodo from './features/todo/AddTodo'
+
+const App = () => <AddTodo />
 
 export default App
