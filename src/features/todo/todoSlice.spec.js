@@ -1,4 +1,9 @@
-import todoSlice, { addTodo, updateTodo, deleteTodo } from './todoSlice'
+import todoSlice, {
+  addTodo,
+  updateTodo,
+  deleteTodo,
+  resetTodos,
+} from './todoSlice'
 import { v4 as uuid } from 'uuid'
 
 jest.mock('uuid', () => ({
@@ -120,5 +125,30 @@ describe('deleteTodo', () => {
     const nextState = todoSlice(initialState, action)
 
     expect(nextState).toEqual(initialState)
+  })
+})
+
+describe('resetTodos', () => {
+  it('should reset todos to dispatched todos', () => {
+    const initialState = [
+      {
+        id: '1',
+        name: 'Todo',
+      },
+      {
+        id: '2',
+        name: 'Todo',
+      },
+    ]
+    const expectedTodos = [
+      {
+        id: '3',
+        name: 'Todo',
+      },
+    ]
+    const action = resetTodos({ todos: expectedTodos })
+    const nextState = todoSlice(initialState, action)
+
+    expect(nextState).toEqual(expectedTodos)
   })
 })
