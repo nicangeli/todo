@@ -13,19 +13,21 @@ const Recording = ({
   stopRecording,
   playRecordingClicked,
   hasRecordings,
-}) => (
-  <>
-    {isRecording ? (
-      <button onClick={() => stopRecording()}>Stop Recording</button>
-    ) : (
-      <button onClick={() => startRecordingClicked()}>Start Recording</button>
-    )}
-    {hasRecordings && (
-      <button onClick={() => playRecordingClicked()}>Play Recording</button>
-    )}
-  </>
-)
-
+}) => {
+  const canPlayRecording = hasRecordings && !isRecording
+  return (
+    <>
+      {isRecording ? (
+        <button onClick={() => stopRecording()}>Stop Recording</button>
+      ) : (
+        <button onClick={() => startRecordingClicked()}>Start Recording</button>
+      )}
+      {canPlayRecording && (
+        <button onClick={() => playRecordingClicked()}>Play Recording</button>
+      )}
+    </>
+  )
+}
 const mapStateToProps = (state) => ({
   isRecording: state.recording.isRecording,
   hasRecordings: state.recording.actions.length > 0,
