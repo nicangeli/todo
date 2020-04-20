@@ -9,6 +9,12 @@ const initialState = {
   actions: [],
 }
 
+const trackActions = (state, action) => {
+  if (state.isRecording) {
+    state.actions.push(action)
+  }
+}
+
 const recordingSlice = createSlice({
   name: 'recording',
   initialState,
@@ -22,21 +28,9 @@ const recordingSlice = createSlice({
     },
   },
   extraReducers: {
-    [addTodo]: (state, action) => {
-      if (state.isRecording) {
-        state.actions.push(action)
-      }
-    },
-    [updateTodo]: (state, action) => {
-      if (state.isRecording) {
-        state.actions.push(action)
-      }
-    },
-    [deleteTodo]: (state, action) => {
-      if (state.isRecording) {
-        state.actions.push(action)
-      }
-    },
+    [addTodo]: trackActions,
+    [updateTodo]: trackActions,
+    [deleteTodo]: trackActions,
   },
 })
 
