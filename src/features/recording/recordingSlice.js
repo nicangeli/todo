@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+import { addTodo, updateTodo, deleteTodo } from '../todo/todoSlice'
+
 const initialState = {
   isRecording: false,
   isPlaying: false,
@@ -17,6 +19,23 @@ const recordingSlice = createSlice({
     },
     stopRecording: (state, action) => {
       state.isRecording = false
+    },
+  },
+  extraReducers: {
+    [addTodo]: (state, action) => {
+      if (state.isRecording) {
+        state.actions.push(action)
+      }
+    },
+    [updateTodo]: (state, action) => {
+      if (state.isRecording) {
+        state.actions.push(action)
+      }
+    },
+    [deleteTodo]: (state, action) => {
+      if (state.isRecording) {
+        state.actions.push(action)
+      }
     },
   },
 })

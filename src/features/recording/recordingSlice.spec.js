@@ -1,6 +1,7 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
+import { addTodo, updateTodo, deleteTodo } from '../todo/todoSlice'
 import recordingReducer, {
   startRecording,
   startRecordingClicked,
@@ -38,6 +39,50 @@ describe('recording reducer', () => {
 
       expect(nextState).toEqual({
         isRecording: false,
+      })
+    })
+  })
+  describe('addTodo/updateTodo/deleteTodo', () => {
+    it('should track the actions dispatched', () => {
+      const initialState = {
+        isRecording: true,
+        actions: [],
+      }
+      const addTodoAction = addTodo({
+        name: 'todo1',
+        description: 'description1',
+      })
+      const stateAfterAdd = recordingReducer(initialState, addTodoAction)
+
+      expect(stateAfterAdd).toEqual({
+        isRecording: true,
+        actions: [addTodoAction],
+      })
+
+      const updateTodoAction = updateTodo({
+        id: addTodoAction.payload.id,
+        completed: true,
+      })
+
+      const stateAfterUpdate = recordingReducer(stateAfterAdd, updateTodoAction)
+
+      expect(stateAfterUpdate).toEqual({
+        isRecording: true,
+        actions: [addTodoAction, updateTodoAction],
+      })
+
+      const deleteTodoAction = deleteTodo({
+        id: addTodoAction.payload.id,
+      })
+
+      const stateAfterDelete = recordingReducer(
+        stateAfterUpdate,
+        deleteTodoAction
+      )
+
+      expect(stateAfterDelete).toEqual({
+        isRecording: true,
+        actions: [addTodoAction, updateTodoAction, deleteTodoAction],
       })
     })
   })
