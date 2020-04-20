@@ -85,6 +85,19 @@ describe('recording reducer', () => {
         actions: [addTodoAction, updateTodoAction, deleteTodoAction],
       })
     })
+    it('should not track actions dispatched if not recording', () => {
+      const initialState = {
+        isRecording: false,
+        actions: [],
+      }
+      const addTodoAction = addTodo({
+        name: 'Name',
+        description: 'Description',
+      })
+      const nextState = recordingReducer(initialState, addTodoAction)
+
+      expect(nextState).toEqual(initialState)
+    })
   })
 })
 
