@@ -19,13 +19,17 @@ const todoSlice = createSlice({
         },
       }),
     },
+    updateTodo: (state, action) => {
+      const todo = state.find(({ id }) => id === action.payload.id)
+      todo.completed = action.payload.completed
+    },
   },
 })
 
 const { actions, reducer } = todoSlice
 
-const { addTodo } = actions
+const { addTodo, updateTodo } = actions
 
-export { addTodo }
+export { addTodo, updateTodo }
 
 export default reducer

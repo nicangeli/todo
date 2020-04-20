@@ -1,4 +1,4 @@
-import todoSlice, { addTodo } from './todoSlice'
+import todoSlice, { addTodo, updateTodo } from './todoSlice'
 import { v4 as uuid } from 'uuid'
 
 jest.mock('uuid', () => ({
@@ -46,5 +46,50 @@ describe('addTodo', () => {
     const [{ createdAt }] = todoSlice(initialState, action)
 
     expect(new Date(createdAt).getTime()).toEqual(new Date(today).getTime())
+  })
+})
+
+describe('updateTodo', () => {
+  it('should mark todo as completed when updateTodo is dispatched with completed true', () => {
+    const initialState = [
+      {
+        id: '1',
+        completed: false,
+      },
+    ]
+    const action = updateTodo({ id: '1', completed: true })
+    const nextState = todoSlice(initialState, action)
+
+    expect(nextState).toEqual([
+      {
+        id: '1',
+        completed: true,
+      },
+    ])
+  })
+  it('should mark todo as incomplete when updateTodo is dispatched with completed false', () => {
+    const initialState = [
+      {
+        id: '1',
+        completed: false,
+      },
+      {
+        id: '2',
+        completed: true,
+      },
+    ]
+    const action = updateTodo({ id: '2', completed: false })
+    const nextState = todoSlice(initialState, action)
+
+    expect(nextState).toEqual([
+      {
+        id: '1',
+        completed: false,
+      },
+      {
+        id: '2',
+        completed: false,
+      },
+    ])
   })
 })
