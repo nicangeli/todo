@@ -1,4 +1,4 @@
-import todoSlice, { addTodo, updateTodo } from './todoSlice'
+import todoSlice, { addTodo, updateTodo, deleteTodo } from './todoSlice'
 import { v4 as uuid } from 'uuid'
 
 jest.mock('uuid', () => ({
@@ -95,6 +95,28 @@ describe('updateTodo', () => {
   it('should do nothing if id is not found', () => {
     const initialState = []
     const action = updateTodo({ id: '1', completed: true })
+    const nextState = todoSlice(initialState, action)
+
+    expect(nextState).toEqual(initialState)
+  })
+})
+
+describe('deleteTodo', () => {
+  it('should remove todo if id is found', () => {
+    const initialState = [
+      {
+        id: '1',
+        name: 'Todo to delete',
+      },
+    ]
+    const action = deleteTodo({ id: '1' })
+    const nextState = todoSlice(initialState, action)
+
+    expect(nextState).toEqual([])
+  })
+  it('should do nothing if id is not found', () => {
+    const initialState = []
+    const action = deleteTodo({ id: '2' })
     const nextState = todoSlice(initialState, action)
 
     expect(nextState).toEqual(initialState)
