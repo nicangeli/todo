@@ -15,6 +15,7 @@ const todoSlice = createSlice({
           createdAt: new Date(Date.now()).toISOString(),
           name,
           description,
+          completed: false,
         },
       }),
     },

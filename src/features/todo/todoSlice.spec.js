@@ -26,6 +26,7 @@ describe('addTodo', () => {
         description: 'My description',
         createdAt: expect.any(String),
         id: expect.any(String),
+        completed: false,
       },
     ])
   })
