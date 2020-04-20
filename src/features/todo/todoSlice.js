@@ -1,14 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { v4 as uuid } from 'uuid'
 
 const todoSlice = createSlice({
   name: 'todo',
   initialState: [],
   reducers: {
-    addTodo: (state, action) => {
-      state.push({
-        name: action.payload.name,
-        description: action.payload.description,
-      })
+    addTodo: {
+      reducer: (state, action) => {
+        state.push(action.payload)
+      },
+      prepare: ({ name, description }) => ({
+        payload: {
+          id: uuid(),
+          createdAt: new Date(Date.now()).toISOString(),
+          name,
+          description,
+        },
+      }),
     },
   },
 })
