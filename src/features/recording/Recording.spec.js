@@ -14,13 +14,15 @@ describe('Recording', () => {
   it('should dispatch startRecording when start recording button is clicked', () => {
     const store = mockStore({ todos: [], recording: {} })
 
-    const { getByText } = render(
+    const { queryByText, getByText } = render(
       <Provider store={store}>
         <Recording />
       </Provider>
     )
 
     userEvent.click(getByText('Start Recording'))
+
+    expect(queryByText('Stop Recording')).toBeFalsy()
 
     const [action] = store.getActions()
 
@@ -41,13 +43,15 @@ describe('Recording', () => {
       },
     })
 
-    const { getByText } = render(
+    const { getByText, queryByText } = render(
       <Provider store={store}>
         <Recording />
       </Provider>
     )
 
     userEvent.click(getByText('Stop Recording'))
+
+    expect(queryByText('Start Recording')).toBeFalsy()
 
     const [action] = store.getActions()
 
