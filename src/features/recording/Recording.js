@@ -13,8 +13,9 @@ const Recording = ({
   stopRecording,
   playRecordingClicked,
   hasRecordings,
+  isPlaying,
 }) => {
-  const canPlayRecording = hasRecordings && !isRecording
+  const canPlayRecording = hasRecordings && !isRecording && !isPlaying
   return (
     <>
       {isRecording ? (
@@ -31,6 +32,7 @@ const Recording = ({
 const mapStateToProps = (state) => ({
   isRecording: state.recording.isRecording,
   hasRecordings: state.recording.actions.length > 0,
+  isPlaying: state.recording.isPlaying,
 })
 const mapDispatchToProps = {
   startRecordingClicked,

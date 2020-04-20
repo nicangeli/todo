@@ -134,4 +134,30 @@ describe('Recording', () => {
 
     expect(queryByText('Play Recording')).toBeFalsy()
   })
+  it('should not render Play Recording when currently playing back recording', () => {
+    const store = mockStore({
+      todos: [],
+      recording: {
+        isRecording: false,
+        isPlaying: true,
+        actions: [
+          {
+            id: '1',
+            name: 'Name',
+          },
+        ],
+        stateAtStartOfRecording: {
+          todos: [],
+        },
+      },
+    })
+
+    const { queryByText } = render(
+      <Provider store={store}>
+        <Recording />
+      </Provider>
+    )
+
+    expect(queryByText('Play Recording')).toBeFalsy()
+  })
 })
