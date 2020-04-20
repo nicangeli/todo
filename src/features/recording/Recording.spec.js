@@ -5,14 +5,14 @@ import { Provider } from 'react-redux'
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { startRecording, stopRecording } from './recordingSlice'
+import { startRecording, stopRecording, playRecording } from './recordingSlice'
 import Recording from './Recording'
 
 const mockStore = configureStore([thunk])
 
 describe('Recording', () => {
   it('should dispatch startRecording when start recording button is clicked', () => {
-    const store = mockStore({ todos: [], recording: {} })
+    const store = mockStore({ todos: [], recording: { actions: [] } })
 
     const { queryByText, getByText } = render(
       <Provider store={store}>
@@ -30,7 +30,9 @@ describe('Recording', () => {
       startRecording({
         stateAtStartOfRecording: {
           todos: [],
-          recording: {},
+          recording: {
+            actions: [],
+          },
         },
       })
     )
@@ -40,6 +42,7 @@ describe('Recording', () => {
       todos: [],
       recording: {
         isRecording: true,
+        actions: [],
       },
     })
 
@@ -56,5 +59,54 @@ describe('Recording', () => {
     const [action] = store.getActions()
 
     expect(action).toEqual(stopRecording())
+  })
+  it('should render Play Recording when there are actions stored to playback', () => {
+    const store = mockStore({
+      todos: [],
+      recording: {
+        isRecording: false,
+        actions: [
+          {
+            id: '1',
+            name: 'Name 1',
+          },
+        ],
+        stateAtStartOfRecording: {
+          todos: [],
+        },
+      },
+    })
+
+    const { getByText } = render(
+      <Provider store={store}>
+        <Recording />
+      </Provider>
+    )
+
+    userEvent.click(getByText('Play Recording'))
+
+    const [action] = store.getActions()
+
+    expect(action).toEqual(playRecording())
+  })
+  it('should not render Play Recording when there no actions stored to playback', () => {
+    const store = mockStore({
+      todos: [],
+      recording: {
+        isRecording: false,
+        actions: [],
+        stateAtStartOfRecording: {
+          todos: [],
+        },
+      },
+    })
+
+    const { queryByText } = render(
+      <Provider store={store}>
+        <Recording />
+      </Provider>
+    )
+
+    expect(queryByText('Play Recording')).toBeFalsy()
   })
 })
