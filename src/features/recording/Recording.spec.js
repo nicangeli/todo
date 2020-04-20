@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { startRecording } from './recordingSlice'
+import { startRecording, stopRecording } from './recordingSlice'
 import Recording from './Recording'
 
 const mockStore = configureStore([thunk])
@@ -32,5 +32,25 @@ describe('Recording', () => {
         },
       })
     )
+  })
+  it('should render and dispatch stopRecording when isRecording', () => {
+    const store = mockStore({
+      todos: [],
+      recording: {
+        isRecording: true,
+      },
+    })
+
+    const { getByText } = render(
+      <Provider store={store}>
+        <Recording />
+      </Provider>
+    )
+
+    userEvent.click(getByText('Stop Recording'))
+
+    const [action] = store.getActions()
+
+    expect(action).toEqual(stopRecording())
   })
 })
