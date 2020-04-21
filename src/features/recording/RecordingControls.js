@@ -5,6 +5,7 @@ import {
   startRecordingClicked,
   stopRecording,
   playRecordingClicked,
+  clearRecording,
 } from './recordingSlice'
 
 const RecordingControls = ({
@@ -14,6 +15,7 @@ const RecordingControls = ({
   playRecordingClicked,
   hasRecordings,
   isPlaying,
+  clearRecording,
 }) => {
   const canPlayRecording = hasRecordings && !isRecording && !isPlaying
   return (
@@ -24,7 +26,10 @@ const RecordingControls = ({
         <button onClick={() => startRecordingClicked()}>Start Recording</button>
       )}
       {canPlayRecording && (
-        <button onClick={() => playRecordingClicked()}>Play Recording</button>
+        <>
+          <button onClick={() => playRecordingClicked()}>Play Recording</button>
+          <button onClick={() => clearRecording()}>Clear Recording</button>
+        </>
       )}
     </>
   )
@@ -38,5 +43,6 @@ const mapDispatchToProps = {
   startRecordingClicked,
   stopRecording,
   playRecordingClicked,
+  clearRecording,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(RecordingControls)

@@ -9,6 +9,7 @@ import recordingReducer, {
   stopRecording,
   playRecording,
   playRecordingClicked,
+  clearRecording,
 } from './recordingSlice'
 
 const mockStore = configureMockStore([thunk])
@@ -55,6 +56,23 @@ describe('recording reducer', () => {
 
       expect(nextState).toEqual({
         isPlaying: true,
+      })
+    })
+  })
+  describe('clearRecording', () => {
+    it('should set actions and stateAtStartOfRecording back to initial when clearRecording is dispatched', () => {
+      const initialState = {
+        actions: [addTodo({ name: 'Todo', description: 'To clear' })],
+        stateAtStartOfRecording: {
+          todos: [],
+        },
+      }
+      const clearRecordingAction = clearRecording()
+      const nextState = recordingReducer(initialState, clearRecordingAction)
+
+      expect(nextState).toEqual({
+        actions: [],
+        stateAtStartOfRecording: {},
       })
     })
   })

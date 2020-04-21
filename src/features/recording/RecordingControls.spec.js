@@ -5,7 +5,12 @@ import { Provider } from 'react-redux'
 import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { startRecording, stopRecording, playRecording } from './recordingSlice'
+import {
+  startRecording,
+  stopRecording,
+  playRecording,
+  clearRecording,
+} from './recordingSlice'
 import RecordingControls from './RecordingControls'
 
 const mockStore = configureStore([thunk])
@@ -159,5 +164,56 @@ describe('RecordingControls', () => {
     )
 
     expect(queryByText('Play Recording')).toBeFalsy()
+  })
+  it('should not render Clear Recording button when there is no recording', () => {
+    const store = mockStore({
+      todos: [],
+      recording: {
+        isRecording: false,
+        isPlaying: false,
+        actions: [],
+        stateAtStartOfRecording: {
+          todos: [],
+        },
+      },
+    })
+
+    const { queryByText } = render(
+      <Provider store={store}>
+        <RecordingControls />
+      </Provider>
+    )
+
+    expect(queryByText('Clear Recording')).toBeFalsy()
+  })
+  it('should render Clear Recording button when there is a recording available', () => {
+    const store = mockStore({
+      todos: [],
+      recording: {
+        isRecording: false,
+        isPlaying: false,
+        actions: [
+          {
+            id: '1',
+            name: 'Recording to clear',
+          },
+        ],
+        stateAtStartOfRecording: {
+          todos: [],
+        },
+      },
+    })
+
+    const { getByText } = render(
+      <Provider store={store}>
+        <RecordingControls />
+      </Provider>
+    )
+
+    userEvent.click(getByText('Clear Recording'))
+
+    const [action] = store.getActions()
+
+    expect(action).toEqual(clearRecording())
   })
 })
