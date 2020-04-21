@@ -1,4 +1,4 @@
-import todoSlice, {
+import todoReducer, {
   addTodo,
   updateTodo,
   deleteTodo,
@@ -24,7 +24,7 @@ describe('addTodo', () => {
   it('should append a todo to the list when addTodo is dispatched', () => {
     const initialState = []
     const action = addTodo({ name: 'Todo', description: 'My description' })
-    const nextState = todoSlice(initialState, action)
+    const nextState = todoReducer(initialState, action)
     expect(nextState).toEqual([
       {
         name: 'Todo',
@@ -39,7 +39,7 @@ describe('addTodo', () => {
     uuid.mockReturnValueOnce('generated-id')
     const initialState = []
     const action = addTodo({ name: 'Todo', description: 'My description' })
-    const [{ id }] = todoSlice(initialState, action)
+    const [{ id }] = todoReducer(initialState, action)
 
     expect(id).toEqual('generated-id')
   })
@@ -48,7 +48,7 @@ describe('addTodo', () => {
     global.Date.now = () => new Date(today).getTime()
     const initialState = []
     const action = addTodo({ name: 'Todo', description: 'My description' })
-    const [{ createdAt }] = todoSlice(initialState, action)
+    const [{ createdAt }] = todoReducer(initialState, action)
 
     expect(new Date(createdAt).getTime()).toEqual(new Date(today).getTime())
   })
@@ -63,7 +63,7 @@ describe('updateTodo', () => {
       },
     ]
     const action = updateTodo({ id: '1', completed: true })
-    const nextState = todoSlice(initialState, action)
+    const nextState = todoReducer(initialState, action)
 
     expect(nextState).toEqual([
       {
@@ -84,7 +84,7 @@ describe('updateTodo', () => {
       },
     ]
     const action = updateTodo({ id: '2', completed: false })
-    const nextState = todoSlice(initialState, action)
+    const nextState = todoReducer(initialState, action)
 
     expect(nextState).toEqual([
       {
@@ -100,7 +100,7 @@ describe('updateTodo', () => {
   it('should do nothing if id is not found', () => {
     const initialState = []
     const action = updateTodo({ id: '1', completed: true })
-    const nextState = todoSlice(initialState, action)
+    const nextState = todoReducer(initialState, action)
 
     expect(nextState).toEqual(initialState)
   })
@@ -115,14 +115,14 @@ describe('deleteTodo', () => {
       },
     ]
     const action = deleteTodo({ id: '1' })
-    const nextState = todoSlice(initialState, action)
+    const nextState = todoReducer(initialState, action)
 
     expect(nextState).toEqual([])
   })
   it('should do nothing if id is not found', () => {
     const initialState = []
     const action = deleteTodo({ id: '2' })
-    const nextState = todoSlice(initialState, action)
+    const nextState = todoReducer(initialState, action)
 
     expect(nextState).toEqual(initialState)
   })
@@ -147,7 +147,7 @@ describe('resetTodos', () => {
       },
     ]
     const action = resetTodos({ todos: expectedTodos })
-    const nextState = todoSlice(initialState, action)
+    const nextState = todoReducer(initialState, action)
 
     expect(nextState).toEqual(expectedTodos)
   })
