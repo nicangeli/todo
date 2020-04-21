@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",
+    "build": "webpack --config webpack.config.prod.js",
     "test": "jest",
     "test:watch": "npm test -- --watch"
   },
@@ -40,6 +41,7 @@
     "@testing-library/react": "^10.0.2",
     "@testing-library/user-event": "^10.0.2",
     "babel-plugin-styled-components": "^1.10.7",
+    "clean-webpack-plugin": "^3.0.0",
     "jest-dom": "^4.0.0",
     "redux-mock-store": "^1.5.4",
     "styled-components": "^5.1.0",
