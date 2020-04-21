@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
 
 import {
   startRecordingClicked,
@@ -7,6 +8,8 @@ import {
   playRecordingClicked,
   clearRecording,
 } from './recordingSlice'
+
+import { SubmitButton, ButtonGroup } from '../../components/atoms'
 
 const RecordingControls = ({
   isRecording,
@@ -19,19 +22,27 @@ const RecordingControls = ({
 }) => {
   const canPlayRecording = hasRecordings && !isRecording && !isPlaying
   return (
-    <>
+    <ButtonGroup>
       {isRecording ? (
-        <button onClick={() => stopRecording()}>Stop Recording</button>
+        <SubmitButton onClick={() => stopRecording()}>
+          Stop Recording
+        </SubmitButton>
       ) : (
-        <button onClick={() => startRecordingClicked()}>Start Recording</button>
+        <SubmitButton onClick={() => startRecordingClicked()}>
+          Start Recording
+        </SubmitButton>
       )}
       {canPlayRecording && (
         <>
-          <button onClick={() => playRecordingClicked()}>Play Recording</button>
-          <button onClick={() => clearRecording()}>Clear Recording</button>
+          <SubmitButton onClick={() => playRecordingClicked()}>
+            Play Recording
+          </SubmitButton>
+          <SubmitButton onClick={() => clearRecording()}>
+            Clear Recording
+          </SubmitButton>
         </>
       )}
-    </>
+    </ButtonGroup>
   )
 }
 const mapStateToProps = (state) => ({

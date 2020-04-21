@@ -8,6 +8,10 @@ const SubmitButton = styled.button`
   border-radius: 10px;
   text-transform: uppercase;
   cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `
 
 export default SubmitButton
