@@ -4,38 +4,15 @@ import styled from 'styled-components'
 
 import { addTodo } from './todoSlice'
 
-const Title = styled.h1`
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 800;
-`
-
-const SubmitButton = styled.button`
-  padding: 10px 30px;
-  background: #f7ab1b;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  text-transform: uppercase;
-  cursor: pointer;
-`
+import {
+  Title,
+  SubmitButton,
+  FormInput,
+  FormTextArea,
+} from '../../components/atoms'
 
 const FormElement = styled.div`
   margin-bottom: 20px;
-`
-
-const FormInput = styled.input`
-  padding: 10px;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 400;
-  min-width: 300px;
-`
-
-const FormTextArea = styled.textarea`
-  padding: 10px;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 400;
-  width: 50%;
-  min-width: 300px;
 `
 
 const AddToDo = ({ addTodo }) => {
