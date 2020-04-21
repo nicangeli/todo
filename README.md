@@ -1,5 +1,9 @@
 # ToDo + Record Functionality
 
+## How to view?
+
+The application is deployed on Surge [https://nicangeli-todo.surge.sh/](https://nicangeli-todo.surge.sh/)
+
 ## Commands
 
 ```bash
