@@ -18,7 +18,7 @@ describe('AddTodo', () => {
         <AddTodo />
       </Provider>
     )
-    userEvent.type(getByPlaceholderText('what'), 'test name')
+    userEvent.type(getByPlaceholderText('add todo'), 'test name')
     userEvent.type(getByPlaceholderText('description'), 'test description')
     userEvent.click(getByRole('button'))
 
