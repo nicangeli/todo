@@ -2,13 +2,13 @@ import React from 'react'
 
 import AddTodo from './features/todo/AddTodo'
 import TodoList from './features/todo/TodoList'
-import Recording from './features/recording/Recording'
+import RecordingControls from './features/recording/RecordingControls'
 
 const App = () => (
   <>
     <AddTodo />
     <TodoList />
-    <Recording />
+    <RecordingControls />
   </>
 )
 

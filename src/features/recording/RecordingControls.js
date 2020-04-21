@@ -7,7 +7,7 @@ import {
   playRecordingClicked,
 } from './recordingSlice'
 
-const Recording = ({
+const RecordingControls = ({
   isRecording,
   startRecordingClicked,
   stopRecording,
@@ -39,4 +39,4 @@ const mapDispatchToProps = {
   stopRecording,
   playRecordingClicked,
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Recording)
+export default connect(mapStateToProps, mapDispatchToProps)(RecordingControls)

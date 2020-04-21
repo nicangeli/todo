@@ -6,17 +6,17 @@ import { render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { startRecording, stopRecording, playRecording } from './recordingSlice'
-import Recording from './Recording'
+import RecordingControls from './RecordingControls'
 
 const mockStore = configureStore([thunk])
 
-describe('Recording', () => {
+describe('RecordingControls', () => {
   it('should dispatch startRecording when start recording button is clicked', () => {
     const store = mockStore({ todos: [], recording: { actions: [] } })
 
     const { queryByText, getByText } = render(
       <Provider store={store}>
-        <Recording />
+        <RecordingControls />
       </Provider>
     )
 
@@ -48,7 +48,7 @@ describe('Recording', () => {
 
     const { getByText, queryByText } = render(
       <Provider store={store}>
-        <Recording />
+        <RecordingControls />
       </Provider>
     )
 
@@ -79,7 +79,7 @@ describe('Recording', () => {
 
     const { getByText } = render(
       <Provider store={store}>
-        <Recording />
+        <RecordingControls />
       </Provider>
     )
 
@@ -103,7 +103,7 @@ describe('Recording', () => {
 
     const { queryByText } = render(
       <Provider store={store}>
-        <Recording />
+        <RecordingControls />
       </Provider>
     )
 
@@ -128,7 +128,7 @@ describe('Recording', () => {
 
     const { queryByText } = render(
       <Provider store={store}>
-        <Recording />
+        <RecordingControls />
       </Provider>
     )
 
@@ -154,7 +154,7 @@ describe('Recording', () => {
 
     const { queryByText } = render(
       <Provider store={store}>
-        <Recording />
+        <RecordingControls />
       </Provider>
     )
 
