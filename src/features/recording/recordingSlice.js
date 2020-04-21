@@ -33,6 +33,9 @@ const recordingSlice = createSlice({
       state.actions = []
       state.stateAtStartOfRecording = {}
     },
+    playRecordingFinished: (state) => {
+      state.isPlaying = false
+    },
   },
   extraReducers: {
     [addTodo]: trackActions,
@@ -43,7 +46,13 @@ const recordingSlice = createSlice({
 
 const { actions, reducer } = recordingSlice
 
-const { startRecording, stopRecording, playRecording, clearRecording } = actions
+const {
+  startRecording,
+  stopRecording,
+  playRecording,
+  clearRecording,
+  playRecordingFinished,
+} = actions
 
 const startRecordingClicked = () => (dispatch, getState) => {
   const stateAtStartOfRecording = getState()
@@ -52,7 +61,9 @@ const startRecordingClicked = () => (dispatch, getState) => {
 
 const playRecordingClicked = () => (dispatch, getState) => {
   const { recording } = getState()
-  const { actions: actionsToDispatch, stateAtStartOfRecording } = recording
+  const { actions, stateAtStartOfRecording } = recording
+
+  const actionsToDispatch = actions.concat(playRecordingFinished())
 
   dispatch(playRecording())
   dispatch(resetTodos({ todos: stateAtStartOfRecording.todos }))
@@ -71,6 +82,7 @@ export {
   playRecording,
   playRecordingClicked,
   clearRecording,
+  playRecordingFinished,
 }
 
 export default reducer

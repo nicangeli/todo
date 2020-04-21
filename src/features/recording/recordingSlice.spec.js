@@ -10,6 +10,7 @@ import recordingReducer, {
   playRecording,
   playRecordingClicked,
   clearRecording,
+  playRecordingFinished,
 } from './recordingSlice'
 
 const mockStore = configureMockStore([thunk])
@@ -73,6 +74,22 @@ describe('recording reducer', () => {
       expect(nextState).toEqual({
         actions: [],
         stateAtStartOfRecording: {},
+      })
+    })
+  })
+  describe('playRecordingFinished', () => {
+    it('should set isPlaying to false when playRecordingFinished is dispatched', () => {
+      const initialState = {
+        isPlaying: true,
+      }
+      const playRecordingFinishedAction = playRecordingFinished()
+      const nextState = recordingReducer(
+        initialState,
+        playRecordingFinishedAction
+      )
+
+      expect(nextState).toEqual({
+        isPlaying: false,
       })
     })
   })
@@ -194,6 +211,7 @@ describe('thunks', () => {
         addTodoAction,
         updateTodoAction,
         deleteTodoAction,
+        playRecordingFinished(),
       ])
     })
   })
